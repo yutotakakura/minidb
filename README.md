@@ -1,5 +1,7 @@
 # minidb
 
+[![CI](https://github.com/yutotakakura/minidb/actions/workflows/ci.yml/badge.svg)](https://github.com/yutotakakura/minidb/actions/workflows/ci.yml)
+
 実行計画（EXPLAIN）とインデックスを原理から理解するために、Go で RDBMS を一から作るプロジェクト。
 
 性能を出すためではなく、**内部で何が起きているかを見えるようにするために**作っている。

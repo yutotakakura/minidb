@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # go.mod の go ディレクティブからバージョンを読む。
+      # ワークフロー側にバージョンを書くと二重管理になるため。
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      # gofmt は設定を持たないので、整形済みかどうかは白黒つく。
+      # gofmt -l は「整形が必要なファイル」を列挙するだけなので、
+      # 出力が空でなければ落とす。
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "整形されていないファイルがあります:"
+            echo "$unformatted"
+            echo "ローカルで 'gofmt -w .' を実行してください。"
+            exit 1
+          fi
+
+      # コンパイルは通るがバグ、というパターンの静的解析。
+      - name: go vet
+        run: go vet ./...
+
+      # -race: バッファプールは sync.Mutex で排他しているので、
+      #        将来並行アクセスを入れたときにデータ競合を検出できるようにしておく。
+      # -count=1: テスト結果のキャッシュを無効化し、必ず実行させる。
+      - name: go test
+        run: go test ./... -race -count=1
