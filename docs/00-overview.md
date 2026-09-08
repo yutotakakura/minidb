@@ -92,7 +92,8 @@ minidb/
 ├── go.mod
 ├── docs/
 │   ├── 00-overview.md        このファイル
-│   └── 01-storage.md         Phase 1 の解説
+│   ├── 01-storage.md         Phase 1 の解説
+│   └── 02-page-code-reading.md  page.go の読み方
 ├── pkg/
 │   ├── storage/              Phase 1: ページ / ディスク / バッファプール
 │   │   ├── page.go

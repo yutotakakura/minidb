@@ -13,6 +13,7 @@
 |---|---|
 | [docs/00-overview.md](docs/00-overview.md) | 目的・全体アーキテクチャ・Phase ロードマップ・技術選定 |
 | [docs/01-storage.md](docs/01-storage.md) | Phase 1: ディスクとページ（前提知識から） |
+| [docs/02-page-code-reading.md](docs/02-page-code-reading.md) | `page.go` の読み方（図とコードの照合） |
 
 ## 動かし方
 
