@@ -1,6 +1,6 @@
 # page.go の読み方
 
-> [01-storage.md](01-storage.md) の図が、コードのどの行に対応するかを照合するドキュメント。
+> [01-concepts.md](01-concepts.md) の図が、コードのどの行に対応するかを照合するドキュメント。
 > 先に 01 を読んで図を頭に入れてから、こちらを読む。
 
 `page.go` は 238 行あるが、**実質的な処理は `Insert` / `Get` / `Delete` の 3 つだけ**。
@@ -10,7 +10,7 @@
 
 ## 1. 一番大事な 1 行
 
-[`pkg/storage/page.go:95`](../pkg/storage/page.go#L95)
+[`pkg/storage/page.go:95`](../../pkg/storage/page.go#L95)
 
 ```go
 type Page []byte
@@ -83,7 +83,7 @@ TypeScript の配列を関数に渡しても中身が書き換わるのと同じ
 
 ## 2. 定規: オフセット定数
 
-[`pkg/storage/page.go:49-60`](../pkg/storage/page.go#L49)
+[`pkg/storage/page.go:49-60`](../../pkg/storage/page.go#L49)
 
 ```go
 const (
@@ -119,7 +119,7 @@ const (
 
 ## 3. バイト列と数値の変換: アクセサ
 
-[`pkg/storage/page.go:121-126`](../pkg/storage/page.go#L121)
+[`pkg/storage/page.go:121-126`](../../pkg/storage/page.go#L121)
 
 ```go
 func (p Page) NumSlots() int     { return int(binary.LittleEndian.Uint16(p[offNumSlots:])) }
@@ -171,7 +171,7 @@ Go には `public` / `private` キーワードが無い。**1 文字目の大小
 
 ## 4. 付箋の読み書き
 
-[`pkg/storage/page.go:146-157`](../pkg/storage/page.go#L146)
+[`pkg/storage/page.go:146-157`](../../pkg/storage/page.go#L146)
 
 ```go
 func (p Page) slotPos(i int) int { return PageHeaderSize + i*SlotSize }
@@ -203,7 +203,7 @@ func (p Page) slotPos(i int) int { return PageHeaderSize + i*SlotSize }
 
 ## 5. Insert: ここが図そのもの
 
-[`pkg/storage/page.go:161-180`](../pkg/storage/page.go#L161)
+[`pkg/storage/page.go:161-180`](../../pkg/storage/page.go#L161)
 
 空のページに `"alice"` (5 バイト) を入れるところを、**実際の数値で追う**。
 
@@ -262,7 +262,7 @@ p.setFreeStart(p.slotPos(slotID + 1))       // 177 行
         freeStart = 20
 ```
 
-**01-storage.md §6 の図と 1 バイトも違わない。**
+**01-concepts.md §6 の図と 1 バイトも違わない。**
 `Insert` がやっているのは、図の矢印を内側に動かすことだけ。
 
 続けて `"bob"` (3 バイト) を入れると:
@@ -284,7 +284,7 @@ p.setFreeStart(p.slotPos(slotID + 1))       // 177 行
 
 ## 6. Get と Delete
 
-[`pkg/storage/page.go:185-194`](../pkg/storage/page.go#L185)
+[`pkg/storage/page.go:185-194`](../../pkg/storage/page.go#L185)
 
 ```go
 offset, length := p.slot(slotID)     // 付箋を見る
@@ -296,9 +296,9 @@ return p[offset : offset+length], nil
 
 **付箋を見て、書いてある場所を切り出すだけ。**
 `Slot1 = (4088, 3)` なら `p[4088:4091]` を返す。
-01-storage.md §6 の「付箋を経由する」が、そのままこの 2 行。
+01-concepts.md §6 の「付箋を経由する」が、そのままこの 2 行。
 
-ただし [`page.go:183`](../pkg/storage/page.go#L183) のコメントが重要。
+ただし [`page.go:183`](../../pkg/storage/page.go#L183) のコメントが重要。
 
 ```
   返るのは「ページ内部を指す窓」であって、コピーではない
@@ -309,10 +309,10 @@ return p[offset : offset+length], nil
   同じ場所が別のページに使い回される -> 中身が静かにすり替わる
 ```
 
-これが 01-storage.md §7 の pin/unpin の話と直結する。
-だから [`Clone()`](../pkg/storage/page.go#L197) が別に用意されている。
+これが 01-concepts.md §7 の pin/unpin の話と直結する。
+だから [`Clone()`](../../pkg/storage/page.go#L197) が別に用意されている。
 
-**Delete** は [`page.go:220`](../pkg/storage/page.go#L220) の 1 行。
+**Delete** は [`page.go:220`](../../pkg/storage/page.go#L220) の 1 行。
 
 ```go
 p.setSlot(slotID, 0, 0)

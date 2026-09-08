@@ -12,8 +12,9 @@
 | | 内容 |
 |---|---|
 | [docs/00-overview.md](docs/00-overview.md) | 目的・全体アーキテクチャ・Phase ロードマップ・技術選定 |
-| [docs/01-storage.md](docs/01-storage.md) | Phase 1: ディスクとページ（前提知識から） |
-| [docs/02-page-code-reading.md](docs/02-page-code-reading.md) | `page.go` の読み方（図とコードの照合） |
+| [docs/phase1-storage/](docs/phase1-storage/) | **Phase 1: ディスクとページ** |
+| &nbsp;&nbsp;├ [01-concepts.md](docs/phase1-storage/01-concepts.md) | 前提知識から図で理解する |
+| &nbsp;&nbsp;└ [02-page-code-reading.md](docs/phase1-storage/02-page-code-reading.md) | `page.go` の読み方（図とコードの照合） |
 
 ## 動かし方
 

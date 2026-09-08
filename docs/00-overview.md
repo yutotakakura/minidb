@@ -70,6 +70,20 @@ Projection (name)
 重要なのは **下の層ほど「遅くて確実」、上の層ほど「賢いが実体を持たない」** ということ。
 最下層の `data.db` だけが本物のデータで、上は全部それをどう触るかの工夫でしかない。
 
+## ドキュメントの構成
+
+`docs/` は **Phase ごとにディレクトリを分ける**。各 Phase は 2 枚組で残す。
+
+| | 役割 |
+|---|---|
+| `01-concepts.md` | **「なぜそうなっているか」** — 概念と図。コードを見る前に読む |
+| `02-*-code-reading.md` | **「それがコードのどこか」** — 図と行番号の照合 |
+
+分けているのは、後から読み返すときに「概念だけ確認したい」と
+「実装を追いたい」で使い分けられるようにするため。
+
+`00-overview.md`（このファイル）だけは Phase 横断なので `docs/` 直下に置く。
+
 ## Phase ロードマップ
 
 | Phase | 内容 | 得られる理解 | 状態 |
@@ -91,9 +105,11 @@ Phase 5 と 7 が目的そのもの。1〜4 はそこに辿り着くための土
 minidb/
 ├── go.mod
 ├── docs/
-│   ├── 00-overview.md        このファイル
-│   ├── 01-storage.md         Phase 1 の解説
-│   └── 02-page-code-reading.md  page.go の読み方
+│   ├── 00-overview.md            このファイル（Phase 横断）
+│   └── phase1-storage/           Phase ごとにディレクトリを分ける
+│       ├── README.md             この Phase の目次
+│       ├── 01-concepts.md        概念と図
+│       └── 02-page-code-reading.md  コードとの照合
 ├── pkg/
 │   ├── storage/              Phase 1: ページ / ディスク / バッファプール
 │   │   ├── page.go
